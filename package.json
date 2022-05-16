@@ -1,5 +1,5 @@
 {
-    "name": "sakai-ng",
+    "name": "gestao-fin-fe",
     "version": "13.1.1",
     "scripts": {
         "ng": "ng",
