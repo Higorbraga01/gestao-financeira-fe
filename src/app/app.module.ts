@@ -29,12 +29,12 @@ import { AppRoutingModule } from './app-routing.module';
 
 import { AppCodeModule } from './components/app-code/app.code.component';
 import { AppComponent } from './app.component';
-import { AppMainComponent } from './app.main.component';
-import { AppTopBarComponent } from './app.topbar.component';
-import { AppFooterComponent } from './app.footer.component';
-import { AppConfigComponent } from './app.config.component';
-import { AppMenuComponent } from './app.menu.component';
-import { AppMenuitemComponent } from './app.menuitem.component';
+import { AppMainComponent } from './template/app.main.component';
+import { AppTopBarComponent } from './template/app.topbar.component';
+import { AppFooterComponent } from './template/app.footer.component';
+import { AppConfigComponent } from './template/app.config.component';
+import { AppMenuComponent } from './template/app.menu.component';
+import { AppMenuitemComponent } from './template/app.menuitem.component';
 
 import { DashboardComponent } from './components/dashboard/dashboard.component';
 import { MessagesComponent } from './components/messages/messages.component';

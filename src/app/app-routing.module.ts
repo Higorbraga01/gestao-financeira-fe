@@ -4,7 +4,7 @@ import { DashboardComponent } from './components/dashboard/dashboard.component';
 import { MessagesComponent } from './components/messages/messages.component';
 import { MiscComponent } from './components/misc/misc.component';
 import { EmptyComponent } from './components/empty/empty.component';
-import { AppMainComponent } from './app.main.component';
+import { AppMainComponent } from './template/app.main.component';
 import { LoginComponent } from './components/login/login.component';
 import { ErrorComponent } from './components/error/error.component';
 import { NotfoundComponent } from './components/notfound/notfound.component';
