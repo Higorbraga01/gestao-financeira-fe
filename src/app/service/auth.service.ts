@@ -1,5 +1,6 @@
+import { Token } from './../models/token.model';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
-import { Injectable } from '@angular/core';
+import { Inject, Injectable } from '@angular/core';
 import { Observable } from 'rxjs/internal/Observable';
 import { map } from 'rxjs/internal/operators/map';
 
@@ -7,7 +8,11 @@ import { map } from 'rxjs/internal/operators/map';
   providedIn: 'root'
 })
 export class AuthService {
-    constructor(private httpClient: HttpClient) {}
+    constructor(
+        private httpClient: HttpClient,
+        @Inject('API_ENDPOINT') private endpoint: string
+        ) {}
+
     private formHeader = new  HttpHeaders({
         'Content-Type': 'application/x-www-form-urlencoded'
       })
@@ -27,9 +32,18 @@ export class AuthService {
           );
       }
 
+      private refreshToken(){
+        return this.httpClient.get<Token>(`${this.endpoint}/token/refresh`);
+      }
+
       isUserLoggedIn() {
         let user = sessionStorage.getItem("username");
-        console.log(!(user === null));
+        if(user !== null){
+            this.refreshToken().subscribe(res => {
+                let tokenStr = "Bearer " + res.access_token;
+                sessionStorage.setItem("token", tokenStr);
+            });
+        }
         return !(user === null);
       }
 
