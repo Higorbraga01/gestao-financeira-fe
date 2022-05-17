@@ -1,5 +1,3 @@
-import { InputMaskModule } from 'primeng/inputmask';
-import { InputTextModule } from 'primeng/inputtext';
 import { ChipModule } from 'primeng/chip';
 import { TagModule } from 'primeng/tag';
 import { ScrollTopModule } from 'primeng/scrolltop';
@@ -7,7 +5,6 @@ import { ScrollPanelModule } from 'primeng/scrollpanel';
 import { AvatarGroupModule } from 'primeng/avatargroup';
 import { AvatarModule } from 'primeng/avatar';
 import { ButtonModule } from 'primeng/button';
-
 import {MessagesModule} from 'primeng/messages';
 import {MessageModule} from 'primeng/message';
 import { ProgressBarModule } from 'primeng/progressbar';
@@ -19,6 +16,7 @@ import { ChartModule } from 'primeng/chart';
 import { SkeletonModule } from 'primeng/skeleton';
 import { MenuModule } from 'primeng/menu';
 import { TableModule } from 'primeng/table';
+
 import { NgModule } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
@@ -82,9 +80,6 @@ import { AuthInterceptorService } from './service/auth-interceptor.service';
         ScrollTopModule,
         TagModule,
         ChipModule,
-        InputTextModule,
-        InputMaskModule
-
     ],
     declarations: [
         AppComponent,

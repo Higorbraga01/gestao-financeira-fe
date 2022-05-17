@@ -1,3 +1,7 @@
+import { CategoriaConsultaComponent } from './containers/categoria/categoria-consulta/categoria-consulta.component';
+import { CategoriaCadastroComponent } from './containers/categoria/categoria-cadastro/categoria-cadastro.component';
+import { LancamentoConsultaComponent } from './containers/lancamento/lancamento-consulta/lancamento-consulta.component';
+import { LancamentoCadastroComponent } from './containers/lancamento/lancamento-cadastro/lancamento-cadastro.component';
 import { RouterModule } from '@angular/router';
 import { NgModule } from '@angular/core';
 import { DashboardComponent } from './components/dashboard/dashboard.component';
@@ -17,6 +21,10 @@ import { AuthGuard } from './service/auth.guard';
                 path: '', component: AppMainComponent, canActivate:[AuthGuard] ,
                 children: [
                     {path: '', component: DashboardComponent},
+                    {path: 'lancamento/cadastro', component: LancamentoCadastroComponent,loadChildren: () => import('./containers/lancamento/lancamento.module').then((m) => m.LancamentoModule),canActivate:[AuthGuard]} ,
+                    {path: 'lancamento/consulta', component: LancamentoConsultaComponent,loadChildren: () => import('./containers/lancamento/lancamento.module').then((m) => m.LancamentoModule),canActivate:[AuthGuard]} ,
+                    {path: 'categoria/cadastro', component: CategoriaCadastroComponent,loadChildren: () => import('./containers/categoria/categoria.module').then((m) => m.CategoriaModule),canActivate:[AuthGuard]} ,
+                    {path: 'categoria/consulta', component: CategoriaConsultaComponent,loadChildren: () => import('./containers/categoria/categoria.module').then((m) => m.CategoriaModule),canActivate:[AuthGuard]} ,
                     {path: 'uikit/message', component: MessagesComponent},
                     {path: 'uikit/misc', component: MiscComponent},
                     {path: 'pages/empty', component: EmptyComponent},
