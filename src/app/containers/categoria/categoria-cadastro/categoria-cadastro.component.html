@@ -1,1 +1,17 @@
-<p>categoria-cadastro works!</p>
+<div class="grid p-fluid">
+	<div class="col-12 lg:col-12 md:col-6">
+		<div class="card">
+			<h5>Cadastro Categoria</h5>
+			<form [formGroup]="form" class="grid formgrid">
+				<div class="col-12 mb-2 lg:col-12 md:col-6 lg:mb-3">
+					<input pInputText type="text" formControlName="nome" form placeholder="Nome" class="ng-invalid ng-dirty" />
+				</div>
+                <div class="col-12 mb-2 lg:col-12 md:col-6 lg:mb-3">
+					<input pInputText type="text" formControlName="descricao" placeholder="Descrição" class="ng-invalid ng-dirty" />
+				</div>
+            <div class="col-12 mb-2 lg:col-12 md:col-6 lg:mb-0">
+            <button pButton type="button" (click)="createCategoria()" [disabled]="this.form.invalid" label="Salvar" class="p-button-outlined"></button>
+            </div>
+        </form>
+		</div>
+    </div>
