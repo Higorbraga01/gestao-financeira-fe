@@ -1,3 +1,4 @@
+import { AuthService } from 'src/app/service/auth.service';
 import { Component, OnDestroy } from '@angular/core';
 import { AppMainComponent } from './app.main.component';
 import { Subscription } from 'rxjs';
@@ -11,5 +12,5 @@ export class AppTopBarComponent {
 
     items: MenuItem[];
 
-    constructor(public appMain: AppMainComponent) { }
+    constructor(public appMain: AppMainComponent, public auth: AuthService) { }
 }
