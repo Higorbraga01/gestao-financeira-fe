@@ -16,4 +16,8 @@ export class UserService {
     public getAllUserCategorias(searchObject?: any): Observable<Pageable<Categoria>>{
         return this.httpClient.get<Pageable<Categoria>>(`${this.endpoint}/user/categoria`);
     }
+
+    public getAllUserLancamentos(searchObject?: any): Observable<Pageable<Categoria>>{
+        return this.httpClient.get<Pageable<Categoria>>(`${this.endpoint}/user/lancamento`);
+    }
 }

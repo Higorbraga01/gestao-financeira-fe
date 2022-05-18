@@ -1,6 +1,6 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { FormsModule } from '@angular/forms';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 
 import { LancamentoCadastroComponent } from './lancamento-cadastro/lancamento-cadastro.component';
 import { LancamentoConsultaComponent } from './lancamento-consulta/lancamento-consulta.component';
@@ -13,6 +13,7 @@ import { InputNumberModule } from 'primeng/inputnumber';
 import { InputTextModule } from 'primeng/inputtext';
 import { InputTextareaModule } from 'primeng/inputtextarea';
 import { CardModule } from 'primeng/card';
+import { DropdownModule } from 'primeng/dropdown';
 
 
 
@@ -24,9 +25,10 @@ import { CardModule } from 'primeng/card';
   imports: [
     CommonModule,
     FormsModule,
+    ReactiveFormsModule,
     InputTextModule,
     CardModule,
-    AutoCompleteModule,
+    DropdownModule,
     InputNumberModule,
     CalendarModule,
     ChipsModule,

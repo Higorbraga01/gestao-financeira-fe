@@ -1,63 +1,66 @@
 <div class="grid p-fluid">
-	<div class="col-12 lg:col-12 md:col-6">
-		<div class="card">
-			<h5>Cadastro Lançamento</h5>
-			<div class="grid formgrid">
-				<div class="col-12 mb-2 lg:col-4 lg:mb-0">
-					<input pInputText type="text" placeholder="Default" />
-				</div>
-				<div class="col-12 mb-2 lg:col-4 lg:mb-0">
-					<input pInputText type="text" placeholder="Disabled" disabled />
-				</div>
-				<div class="col-12 mb-2 lg:col-4 lg:mb-0">
-					<input pInputText type="text" placeholder="Invalid" class="ng-invalid ng-dirty" />
-				</div>
-			</div>
+    <div class="col-12 lg:col-12 md:col-6">
+        <div class="card">
+            <h5>Cadastro Lançamento</h5>
+            <form [formGroup]="form" class="grid formgrid">
+                <div class="col-12 mb-2 lg:col-12 md:col-6 lg:mb-3">
+                    <input
+                        pInputText
+                        type="text"
+                        formControlName="nome"
+                        form
+                        placeholder="Nome"
+                        class="ng-invalid ng-dirty"
+                    />
+                </div>
+                <div class="col-12 mb-2 lg:col-12 md:col-6 lg:mb-3">
+                    <p-dropdown [options]="categorias" formControlName="categoriaId" optionLabel="nome" [showClear]="true" placeholder="Selecione uma categoria">
+                        <ng-template let-categoria pTemplate="item">
+                            <div>
+                                <div>{{categoria.nome}}</div>
+                            </div>
+                        </ng-template>
+                    </p-dropdown>
+                </div>
+                <div class="col-12 mb-2 lg:col-12 md:col-6 lg:mb-3">
+                    <p-inputNumber
+                        mode="decimal"
+                        formControlName="quantidadeRepeticao"
+                        [showButtons]="true"
+                        [min]="0"
+                        [max]="100"
+                    >
+                    </p-inputNumber>
+                </div>
+                <div class="col-12 mb-2 lg:col-12 md:col-6 lg:mb-3">
+                    <p-inputNumber
+                        mode="decimal"
+                        formControlName="valorTotal"
+                        [showButtons]="true"
+                        [min]="0"
+                        [max]="100"
+                    >
+                    </p-inputNumber>
+                </div>
+                <div class="col-12 mb-2 lg:col-12 md:col-6 lg:mb-3">
+                    <p-calendar
+                        [showIcon]="true"
+                        [showButtonBar]="true"
+                        formControlName="dataCriacao"
+                    ></p-calendar>
+                </div>
 
-			<h5>Icons</h5>
-			<div class="grid formgrid">
-				<div class="col-12 mb-2 lg:col-4 lg:mb-0">
-					<span class="p-input-icon-left">
-						<i class="pi pi-user"></i>
-						<input pInputText type="text" placeholder="Username" />
-					</span>
-				</div>
-				<div class="col-12 mb-2 lg:col-4 lg:mb-0">
-					<span class="p-input-icon-right">
-						<input pInputText type="text" placeholder="Search" />
-						<i class="pi pi-search"></i>
-					</span>
-				</div>
-				<div class="col-12 mb-2 lg:col-4 lg:mb-0">
-					<span class="p-input-icon-left p-input-icon-right">
-						<i class="pi pi-user"></i>
-						<input pInputText type="text" placeholder="Search" />
-						<i class="pi pi-search"></i>
-					</span>
-				</div>
-			</div>
-
-			<h5>Float Label</h5>
-			<span class="p-float-label">
-				<input pInputText id="username" type="text" />
-				<label htmlFor="username">Username</label>
-			</span>
-
-			<h5>Textarea</h5>
-			<textarea pInputTextarea placeholder="Your Message" autoResize rows="3" cols="30"></textarea>
-
-			<h5>AutoComplete</h5>
-			<p-autoComplete placeholder="Search" id="dd" [dropdown]="true" [multiple]="true" [suggestions]="filteredCountries" (completeMethod)="filterCountry($event)" field="name"></p-autoComplete>
-
-			<h5>Calendar</h5>
-			<p-calendar [showIcon]="true" [showButtonBar]="true" [(ngModel)]="selectedDate"></p-calendar>
-
-			<h5>InputNumber</h5>
-			<p-inputNumber mode="decimal" [showButtons]="true" [min]="0" [max]="100">
-			</p-inputNumber>
-
-			<h5>Chips</h5>
-			<p-chips></p-chips>
-
-		</div>
+                <div class="col-12 mb-2 lg:col-12 md:col-6 lg:mb-0">
+                    <button
+                        pButton
+                        type="button"
+                        (click)="createLancamento()"
+                        [disabled]="this.form.invalid"
+                        label="Salvar"
+                        class="p-button-outlined"
+                    ></button>
+                </div>
+            </form>
+        </div>
     </div>
+</div>
