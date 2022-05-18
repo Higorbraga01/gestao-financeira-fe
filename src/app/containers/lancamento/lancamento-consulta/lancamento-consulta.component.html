@@ -1,1 +1,54 @@
-<p>lancamento-consulta works!</p>
+<div class="grid p-fluid">
+    <div class="col-12 lg:col-12 md:col-6">
+        <div class="card">
+            <p-table
+            #tablecategorias
+            [value]="lancamentos"
+            (onLazyLoad)="loadCustomers($event)"
+            [lazy]="true"
+            [rowHover]="true"
+            [showCurrentPageReport]="true"
+            [paginator]="true"
+            [loading]="loading"
+            [showLoader]="true"
+            [rows]="5"
+            [totalRecords]="totalRecords"
+            [rowsPerPageOptions]="[5, 20, 30]"
+            currentPageReportTemplate="Mostrando de {first} a {last} de {totalRecords} registros"
+            styleClass="p-datatable-gridlines p-datatable-striped  p-datatable-sm-custom"
+            dataKey="id"
+            >
+                <ng-template pTemplate="header">
+                    <tr>
+                        <th pSortableColumn="nome">
+                            Lançamento <p-sortIcon field="nome"></p-sortIcon>
+                        </th>
+                        <th pSortableColumn="quantidadeRepeticao">
+                            Qtd parcelas
+                            <p-sortIcon
+                                field="quantidadeRepeticao"
+                            ></p-sortIcon>
+                        </th>
+                        <th pSortableColumn="valorTotal">
+                            Valor total
+                            <p-sortIcon field="valorTotal"></p-sortIcon>
+                        </th>
+                        <th pSortableColumn="categoria.nome">
+                            Categoria<p-sortIcon
+                                field="categoria.nome"
+                            ></p-sortIcon>
+                        </th>
+                    </tr>
+                </ng-template>
+                <ng-template pTemplate="body" let-lancamento>
+                    <tr>
+                        <td>{{ lancamento.nome }}</td>
+                        <td>{{ lancamento.quantidadeRepeticao }}</td>
+                        <td>{{ lancamento.valorTotal |  currency:'BRL'}}</td>
+                        <td>{{ lancamento.categoria.nome }}</td>
+                    </tr>
+                </ng-template>
+            </p-table>
+        </div>
+    </div>
+</div>

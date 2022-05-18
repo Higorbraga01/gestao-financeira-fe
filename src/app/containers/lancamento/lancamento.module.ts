@@ -1,3 +1,4 @@
+import { TableModule } from 'primeng/table';
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
@@ -34,7 +35,8 @@ import { DropdownModule } from 'primeng/dropdown';
     ChipsModule,
     InputMaskModule,
     InputTextModule,
-    InputTextareaModule
+    InputTextareaModule,
+    TableModule
   ]
 })
 export class LancamentoModule { }
