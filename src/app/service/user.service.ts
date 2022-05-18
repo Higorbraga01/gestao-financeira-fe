@@ -1,3 +1,4 @@
+import { Lancamento } from './../models/lancamento.model';
 import { Pageable } from './../models/Pageable';
 import { Categoria } from './../models/categoria.model';
 import { Observable } from 'rxjs';
@@ -44,9 +45,9 @@ export class UserService {
         return this.httpClient.get<Pageable<Categoria>>(`${this.endpoint}/user/categoria`,{params});
     }
 
-    public getAllUserLancamentos(searchObject?: any): Observable<Pageable<Categoria>>{
+    public getAllUserLancamentos(searchObject?: any): Observable<Pageable<Lancamento>>{
         this.removeEmptyFields(searchObject)
         const params = this.buildHttpParams(searchObject);
-        return this.httpClient.get<Pageable<Categoria>>(`${this.endpoint}/user/lancamento`,{params});
+        return this.httpClient.get<Pageable<Lancamento>>(`${this.endpoint}/user/lancamento`,{params});
     }
 }
