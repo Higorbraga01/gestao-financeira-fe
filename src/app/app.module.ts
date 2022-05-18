@@ -55,6 +55,11 @@ import { NotfoundComponent } from './components/notfound/notfound.component';
 import { AccessComponent } from './components/access/access.component';
 import { AuthInterceptorService } from './service/auth-interceptor.service';
 import { environment } from 'src/environments/environment';
+import { JwtModule, JwtHelperService } from '@auth0/angular-jwt';
+
+export function tokenGetter() {
+    return localStorage.getItem("token");
+  }
 
 @NgModule({
     imports: [
@@ -83,6 +88,11 @@ import { environment } from 'src/environments/environment';
         ScrollTopModule,
         TagModule,
         ChipModule,
+        JwtModule.forRoot({
+            config: {
+              tokenGetter: tokenGetter
+            },
+          })
     ],
     declarations: [
         AppComponent,
@@ -105,7 +115,7 @@ import { environment } from 'src/environments/environment';
     providers: [
         {provide: LocationStrategy, useClass: HashLocationStrategy},
         CountryService, CustomerService, EventService, IconService, NodeService,
-        PhotoService, ProductService, MenuService, ConfigService, MessageService,
+        PhotoService, ProductService, MenuService, ConfigService, MessageService,JwtHelperService,
         {provide: HTTP_INTERCEPTORS, useClass: AuthInterceptorService, multi: true },
         {provide: 'API_ENDPOINT', useValue: environment.API_URL }
     ],

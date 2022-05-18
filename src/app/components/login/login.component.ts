@@ -5,69 +5,76 @@ import { Subscription } from 'rxjs';
 import { Router } from '@angular/router';
 import { AuthService } from 'src/app/service/auth.service';
 @Component({
-  selector: 'app-login',
-  templateUrl: './login.component.html',
-  styles:[`
-    :host ::ng-deep .p-password input {
-    width: 100%;
-    padding:1rem;
-    }
+    selector: 'app-login',
+    templateUrl: './login.component.html',
+    styles: [
+        `
+            :host ::ng-deep .p-password input {
+                width: 100%;
+                padding: 1rem;
+            }
 
-    :host ::ng-deep .pi-eye{
-      transform:scale(1.6);
-      margin-right: 1rem;
-      color: var(--primary-color) !important;
-    }
+            :host ::ng-deep .pi-eye {
+                transform: scale(1.6);
+                margin-right: 1rem;
+                color: var(--primary-color) !important;
+            }
 
-    :host ::ng-deep .pi-eye-slash{
-      transform:scale(1.6);
-      margin-right: 1rem;
-      color: var(--primary-color) !important;
-    }
-  `]
+            :host ::ng-deep .pi-eye-slash {
+                transform: scale(1.6);
+                margin-right: 1rem;
+                color: var(--primary-color) !important;
+            }
+        `,
+    ],
 })
 export class LoginComponent implements OnInit, OnDestroy {
+    valCheck: string[] = ['remember'];
 
-  valCheck: string[] = ['remember'];
+    username: string;
 
-  username: string;
+    password: string;
 
-  password: string;
+    config: AppConfig;
 
-  config: AppConfig;
+    subscription: Subscription;
 
-  subscription: Subscription;
+    @Input() error: string | null;
 
-  @Input() error: string | null;
+    constructor(
+        public router: Router,
+        public configService: ConfigService,
+        public loginservice: AuthService
+    ) {}
 
-  constructor(public router: Router,
-    public configService: ConfigService,
-    public loginservice: AuthService){ }
-
-  ngOnInit(): void {
-    this.config = this.configService.config;
-    this.subscription = this.configService.configUpdate$.subscribe(config => {
-      this.config = config;
-    });
-  }
-
-  checkLogin() {
-    (this.loginservice.authenticate(this.username,this.password).subscribe(
-      data => {
-        this.router.navigate([''])
-      },
-      error => {
-        this.error = error.error.message;
-
-      }
-    )
-    );
-
-  }
-
-  ngOnDestroy(): void {
-    if(this.subscription){
-      this.subscription.unsubscribe();
+    ngOnInit(): void {
+        this.config = this.configService.config;
+        this.subscription = this.configService.configUpdate$.subscribe(
+            (config) => {
+                this.config = config;
+            }
+        );
     }
-  }
+
+    checkLogin() {
+        this.loginservice
+            .authenticateUser(this.username, this.password)
+            .subscribe(
+                (data) => {
+                    this.loginservice.storeUserData(
+                        data.access_token,
+                        this.username
+                    );
+                },
+                (error) => {
+                    this.error = error.error.message;
+                }
+            );
+    }
+
+    ngOnDestroy(): void {
+        if (this.subscription) {
+            this.subscription.unsubscribe();
+        }
+    }
 }
