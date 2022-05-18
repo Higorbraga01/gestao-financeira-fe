@@ -63,6 +63,7 @@ export class LoginComponent implements OnInit, OnDestroy {
                 (data) => {
                     this.loginservice.storeUserData(
                         data.access_token,
+                        data.refresh_token,
                         this.username
                     );
                 },

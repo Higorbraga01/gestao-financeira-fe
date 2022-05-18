@@ -1,3 +1,4 @@
+import { LancamentoRequest } from './../../../models/lancamento.model';
 import { UserService } from './../../../service/user.service';
 import { Categoria } from './../../../models/categoria.model';
 import { Component, OnInit } from '@angular/core';
@@ -6,6 +7,8 @@ import { Router } from '@angular/router';
 import { MessageService } from 'primeng/api';
 import { CategoriaService } from 'src/app/service/categoria.service';
 import { CountryService } from 'src/app/service/countryservice';
+import { TipoLancamentoService } from 'src/app/service/tipo-lancamento.service';
+import { LancamentoService } from 'src/app/service/lancamento.service';
 
 @Component({
   selector: 'app-lancamento-cadastro',
@@ -15,12 +18,14 @@ import { CountryService } from 'src/app/service/countryservice';
 export class LancamentoCadastroComponent implements OnInit {
     form: FormGroup;
     categorias: Categoria[]
+    tiposLancamento: any[];
     countries: any[];
     filteredCountries: any[];
     selectedDate:any;
 
   constructor(private fb: FormBuilder,
-    private categoriaService: CategoriaService,
+    private tipoLancamentoService: TipoLancamentoService,
+    private lancamentoService: LancamentoService,
     private userService: UserService,
     private messageService: MessageService,
     private router: Router) {}
@@ -28,6 +33,8 @@ export class LancamentoCadastroComponent implements OnInit {
   ngOnInit(): void {
     this.userService.getAllUserCategorias()
     .subscribe(categorias => this.categorias = categorias.content);
+    this.tipoLancamentoService.getAllTipoLancamentos()
+    .subscribe(tiposLancamento => this.tiposLancamento = tiposLancamento.content)
     this.createForm();
   }
 
@@ -36,27 +43,44 @@ export class LancamentoCadastroComponent implements OnInit {
         id: [null],
         nome: [null, [Validators.required]],
         categoriaId: [null, [Validators.required]],
-        quantidadeRepeticao: [null],
+        tipoLancamentoId: [null, [Validators.required]],
+        quantidadeRepeticao: [0],
         valorTotal: [null, [Validators.required]],
         dataCriacao: [null, [Validators.required]],
-        tipoLancamentoId: [null, [Validators.required]]
+        dataAlteracao:  [null]
     });
 }
 
 createLancamento(){
-
-}
-
-  filterCountry(event) {
-    const filtered: any[] = [];
-    const query = event.query;
-    for (let i = 0; i < this.categorias.length; i++) {
-        const categoria = this.categorias[i];
-        if (categoria.nome.toLowerCase().indexOf(query.toLowerCase()) == 0) {
-            filtered.push(categoria);
-        }
+    const lancamentoCreate: LancamentoRequest = {
+        nome: this.form.get('nome').value,
+        categoriaId: this.form.get('categoriaId').value,
+        tipoLancamentoId: this.form.get('tipoLancamentoId').value,
+        quantidadeRepeticao: this.form.get('quantidadeRepeticao').value,
+        valorTotal: this.form.get('valorTotal').value.toString().replace('.', ''),
+        dataCriacao: this.form.get('dataCriacao').value
     }
-
-    this.categorias = filtered;
+    if(lancamentoCreate) {
+        this.lancamentoService.save(lancamentoCreate).subscribe({
+            next: (result) => {
+                console.log(result)
+                this.messageService.add({
+                    severity: 'success',
+                    summary: 'Sucesso',
+                    detail: 'Lançamento cadastrado com sucesso',
+                    life: 3000,
+                });
+                this.router.navigateByUrl('lancamento/consulta')
+            },
+            error: (error) => {
+                this.messageService.add({
+                    severity: 'error',
+                    summary: 'Erro',
+                    detail: 'Erro ao cadastrar lançamento',
+                    life: 3000,
+                  })
+            }
+        })
+    }
 }
 }

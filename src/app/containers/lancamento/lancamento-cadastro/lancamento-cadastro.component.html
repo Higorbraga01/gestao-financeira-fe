@@ -3,53 +3,83 @@
         <div class="card">
             <h5>Cadastro Lançamento</h5>
             <form [formGroup]="form" class="grid formgrid">
-                <div class="col-12 mb-2 lg:col-12 md:col-6 lg:mb-3">
+                <div class="col-12 mb-2 lg:col-6 md:col-6 lg:mb-3">
+                    <h6>Nome</h6>
                     <input
                         pInputText
                         type="text"
                         formControlName="nome"
                         form
-                        placeholder="Nome"
+                        placeholder="Digite uma descricao"
                         class="ng-invalid ng-dirty"
                     />
                 </div>
-                <div class="col-12 mb-2 lg:col-12 md:col-6 lg:mb-3">
-                    <p-dropdown [options]="categorias" formControlName="categoriaId" optionLabel="nome" [showClear]="true" placeholder="Selecione uma categoria">
-                        <ng-template let-categoria pTemplate="item">
-                            <div>
-                                <div>{{categoria.nome}}</div>
-                            </div>
-                        </ng-template>
-                    </p-dropdown>
-                </div>
-                <div class="col-12 mb-2 lg:col-12 md:col-6 lg:mb-3">
-                    <p-inputNumber
-                        mode="decimal"
-                        formControlName="quantidadeRepeticao"
-                        [showButtons]="true"
-                        [min]="0"
-                        [max]="100"
-                    >
-                    </p-inputNumber>
-                </div>
-                <div class="col-12 mb-2 lg:col-12 md:col-6 lg:mb-3">
-                    <p-inputNumber
-                        mode="decimal"
-                        formControlName="valorTotal"
-                        [showButtons]="true"
-                        [min]="0"
-                        [max]="100"
-                    >
-                    </p-inputNumber>
-                </div>
-                <div class="col-12 mb-2 lg:col-12 md:col-6 lg:mb-3">
+                <div class="col-12 mb-2 lg:col-6 md:col-6 lg:mb-3">
+                    <h6>Data lançamento</h6>
                     <p-calendar
                         [showIcon]="true"
                         [showButtonBar]="true"
                         formControlName="dataCriacao"
+                        dateFormat="dd/mm/yy"
                     ></p-calendar>
                 </div>
-
+                <div class="col-12 mb-2 lg:col-6 md:col-6 lg:mb-3">
+                    <h6>Categoria</h6>
+                    <p-dropdown
+                        [options]="categorias"
+                        formControlName="categoriaId"
+                        optionLabel="nome"
+                        optionValue="id"
+                        [showClear]="true"
+                        placeholder="Selecione uma categoria"
+                    >
+                        <ng-template let-categoria pTemplate="item">
+                            <div>
+                                <div>{{ categoria.nome }}</div>
+                            </div>
+                        </ng-template>
+                    </p-dropdown>
+                </div>
+                <div class="col-12 mb-2 lg:col-6 md:col-6 lg:mb-3">
+                    <h6>Tipo lançamento</h6>
+                    <p-dropdown
+                        [options]="tiposLancamento"
+                        formControlName="tipoLancamentoId"
+                        optionLabel="nome"
+                        optionValue="id"
+                        [showClear]="true"
+                        placeholder="Selecione um tipo"
+                    >
+                        <ng-template let-tipo pTemplate="item">
+                            <div>
+                                <div>{{ tipo.nome }}</div>
+                            </div>
+                        </ng-template>
+                    </p-dropdown>
+                </div>
+                <div class="col-12 mb-2 lg:col-6 md:col-6 lg:mb-3">
+                    <h6>Valor total</h6>
+                    <p-inputNumber
+                        formControlName="valorTotal"
+                        mode="currency"
+                        currency="BRL"
+                        locale="pt-BR"
+                    ></p-inputNumber>
+                </div>
+                <div class="col-12 mb-2 lg:col-6 md:col-6 lg:mb-3">
+                    <h6>Qtd parcelas</h6>
+                    <p-inputNumber
+                        formControlName="quantidadeRepeticao"
+                        [showButtons]="true"
+                        min="0"
+                        buttonLayout="horizontal"
+                        spinnerMode="horizontal"
+                        decrementButtonClass="p-button-danger"
+                        incrementButtonClass="p-button-success"
+                        incrementButtonIcon="pi pi-plus"
+                        decrementButtonIcon="pi pi-minus"
+                    ></p-inputNumber>
+                </div>
                 <div class="col-12 mb-2 lg:col-12 md:col-6 lg:mb-0">
                     <button
                         pButton
