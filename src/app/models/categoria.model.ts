@@ -4,6 +4,7 @@ export interface CategoriaRequest{
 }
 
 export interface Categoria {
+    id?: number;
     nome?: string;
     descricao?: string;
 }

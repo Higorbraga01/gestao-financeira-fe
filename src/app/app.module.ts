@@ -1,3 +1,4 @@
+import { MessageService } from 'primeng/api';
 import { ChipModule } from 'primeng/chip';
 import { TagModule } from 'primeng/tag';
 import { ScrollTopModule } from 'primeng/scrolltop';
@@ -104,7 +105,7 @@ import { environment } from 'src/environments/environment';
     providers: [
         {provide: LocationStrategy, useClass: HashLocationStrategy},
         CountryService, CustomerService, EventService, IconService, NodeService,
-        PhotoService, ProductService, MenuService, ConfigService,
+        PhotoService, ProductService, MenuService, ConfigService, MessageService,
         {provide: HTTP_INTERCEPTORS, useClass: AuthInterceptorService, multi: true },
         {provide: 'API_ENDPOINT', useValue: environment.API_URL }
     ],

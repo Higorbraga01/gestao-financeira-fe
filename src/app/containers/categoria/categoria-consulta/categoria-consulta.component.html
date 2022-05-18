@@ -1,1 +1,52 @@
-<p>categoria-consulta works!</p>
+<div class="grid">
+    <div class="col-12">
+        <div class="card">
+            <h5>Categorias cadastradas</h5>
+            <p-table
+                [value]="categorias"
+                [lazy]="true"
+                (onLazyLoad)="loadCategorias($event)"
+                [paginator]="true"
+                [rows]="5"
+                [totalRecords]="totalRecords"
+                [showCurrentPageReport]="true"
+                responsiveLayout="scroll"
+                currentPageReportTemplate="Mostrando {first} até {last} de {totalRecords} entradas"
+                [rowsPerPageOptions]="[5, 10, 20]"
+                styleClass="p-datatable-gridlines p-datatable-striped  p-datatable-sm-custom"
+            >
+                <ng-template pTemplate="header">
+                    <tr>
+                        <th class="text-center">Nome</th>
+                        <th class="text-center">Descrição</th>
+                        <th class="text-center">Ações</th>
+                    </tr></ng-template
+                >
+
+                <ng-template pTemplate="body" let-categoria>
+                    <tr>
+                        <td>{{ categoria.nome }}</td>
+                        <td>{{ categoria.descricao }}</td>
+                        <td class="text-center">
+                            <button
+                                pButton
+                                pRipple
+                                type="button"
+                                icon="pi pi-check"
+                                class="p-button-rounded p-button-warning p-button-outlined mr-2"
+                            ></button>
+                            <button
+                                pButton
+                                pRipple
+                                type="button"
+                                icon="pi pi pi-trash"
+                                class="p-button-rounded p-button-danger p-button-outlined mr-2"
+                                (click)="deleteCategoria(categoria.id)"
+                            ></button>
+                        </td>
+                    </tr>
+                </ng-template>
+            </p-table>
+        </div>
+    </div>
+</div>

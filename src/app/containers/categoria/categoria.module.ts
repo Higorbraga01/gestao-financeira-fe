@@ -1,4 +1,7 @@
+import { ToastModule } from 'primeng/toast';
+import { TableModule } from 'primeng/table';
 import { ButtonModule } from 'primeng/button';
+import { ToolbarModule } from 'primeng/toolbar';
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { CategoriaCadastroComponent } from './categoria-cadastro/categoria-cadastro.component';
@@ -18,7 +21,10 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
     FormsModule,
     ReactiveFormsModule,
     InputTextModule,
-    ButtonModule
+    ButtonModule,
+    TableModule,
+    ToastModule,
+    ToolbarModule
   ]
 })
 export class CategoriaModule { }
