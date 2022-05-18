@@ -62,7 +62,7 @@ export class AuthService {
     isUserLoggedIn() {
         let user = sessionStorage.getItem('user');
         if (user !== null) {
-            if (this.jwtHelper.isTokenExpired(this.authToken)) {
+            if (this.jwtHelper.isTokenExpired(sessionStorage.getItem('token'))) {
                 this.refreshToken().subscribe((res) =>
                     sessionStorage.setItem(
                         'token',
@@ -70,7 +70,7 @@ export class AuthService {
                     )
                 );
             }
-            if (this.jwtHelper.isTokenExpired(this.refresh_token)) {
+            if (this.jwtHelper.isTokenExpired(sessionStorage.getItem('refresh_token'))) {
                 this.logout();
             }
         }
