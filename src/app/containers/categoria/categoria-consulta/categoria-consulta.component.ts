@@ -3,6 +3,7 @@ import { UserService } from './../../../service/user.service';
 import { Categoria } from './../../../models/categoria.model';
 import { Component, OnInit } from '@angular/core';
 import { LazyLoadEvent, MenuItem, MessageService } from 'primeng/api';
+import { mapTo, mergeAll, of, share, Subscription, takeUntil, timer } from 'rxjs';
 
 @Component({
     selector: 'app-categoria-consulta',
@@ -10,14 +11,15 @@ import { LazyLoadEvent, MenuItem, MessageService } from 'primeng/api';
     styleUrls: ['./categoria-consulta.component.scss'],
 })
 export class CategoriaConsultaComponent implements OnInit {
+    subs$: Subscription[] = [];
     categorias: Categoria[];
     cols: any[];
     loading: boolean;
     selectAll: boolean = false;
     selectedCategorias: any;
     totalRecords: number;
-    first = 0;
-    rows = 5;
+    loadingData = true;
+    rowsCount: number;
     items: MenuItem[];
     constructor(
         private messageService: MessageService,
@@ -26,20 +28,37 @@ export class CategoriaConsultaComponent implements OnInit {
     ) {}
 
     ngOnInit(): void {
-        // this.userService.getAllUserCategorias().subscribe((categorias) => {
-        //     this.categorias = categorias.content;
-        // });
     }
 
     loadCategorias(event: LazyLoadEvent) {
+        this.rowsCount = event.rows;
+        const page = { page: (event.first / event.rows) };
+        const size = { size: event.rows };
+        let searchObject = {};
+        if (event.sortField) {
+          const sort = { sort: `${event.sortField},${event.sortOrder === 1 ? 'ASC' : 'DESC'}` };
+          searchObject = Object.assign({},page, size, sort);
+        } else {
+          searchObject = Object.assign({},page, size);
+        }
+
         this.loading = true;
-            this.userService
-                .getAllUserCategorias({ lazyEvent: JSON.stringify(event) })
-                .subscribe((res) => {
-                    this.categorias = res.content;
-                    this.totalRecords = res.totalElements;
-                    this.loading = false;
-                });
+        const getCategorias$ =  this.userService.getAllUserCategorias(searchObject).pipe(share());
+        const isLoading$ = of(
+          timer(200).pipe(mapTo(true), takeUntil(getCategorias$)),
+          getCategorias$.pipe(mapTo(false))
+        ).pipe(mergeAll());
+
+        this.subs$.push(
+          isLoading$.subscribe(result => {
+            this.loadingData = result;
+          }),
+          getCategorias$.subscribe((res: { content: Categoria[]; totalElements: number; }) => {
+            this.categorias = res.content;
+            this.totalRecords = res.totalElements;
+            this.loading = false;
+          })
+        );
     }
     deleteCategoria(categoriaId: number) {
         this.categoriaService.deleteById(categoriaId).subscribe(()=>{

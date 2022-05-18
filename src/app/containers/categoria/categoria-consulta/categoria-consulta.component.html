@@ -3,17 +3,21 @@
         <div class="card">
             <h5>Categorias cadastradas</h5>
             <p-table
-                [value]="categorias"
-                [lazy]="true"
-                (onLazyLoad)="loadCategorias($event)"
-                [paginator]="true"
-                [rows]="5"
-                [totalRecords]="totalRecords"
-                [showCurrentPageReport]="true"
-                responsiveLayout="scroll"
-                currentPageReportTemplate="Mostrando {first} até {last} de {totalRecords} entradas"
-                [rowsPerPageOptions]="[5, 10, 20]"
-                styleClass="p-datatable-gridlines p-datatable-striped  p-datatable-sm-custom"
+            #tablecategorias
+            [value]="categorias"
+            (onLazyLoad)="loadCategorias($event)"
+            [lazy]="true"
+            [rowHover]="true"
+            [showCurrentPageReport]="true"
+            [paginator]="true"
+            [loading]="loadingData"
+            [showLoader]="false"
+            [rows]="5"
+            [totalRecords]="totalRecords"
+            [rowsPerPageOptions]="[5, 20, 30]"
+            currentPageReportTemplate="Mostrando de {first} a {last} de {totalRecords} registros"
+            styleClass="p-datatable-gridlines p-datatable-striped  p-datatable-sm-custom"
+            dataKey="id"
             >
                 <ng-template pTemplate="header">
                     <tr>
