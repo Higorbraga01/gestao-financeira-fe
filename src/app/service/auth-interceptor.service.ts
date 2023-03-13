@@ -17,12 +17,10 @@ export class AuthInterceptorService implements HttpInterceptor {
 
       if (sessionStorage.getItem('user') && sessionStorage.getItem('token') && sessionStorage.getItem('refresh_token')) {
           if(this.jwtHelper.isTokenExpired(sessionStorage.getItem('token'))){
-            console.log('refresh token ?', sessionStorage.getItem('refresh_token'))
             req = req.clone({
                 headers: req.headers.append('Authorization', sessionStorage.getItem('refresh_token'))
               });
           }else {
-              console.log('token ?')
             req = req.clone({
                 headers: req.headers.append('Authorization', sessionStorage.getItem('token'))
               });
