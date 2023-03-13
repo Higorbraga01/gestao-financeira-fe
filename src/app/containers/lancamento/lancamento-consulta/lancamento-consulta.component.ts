@@ -35,8 +35,6 @@ export class LancamentoConsultaComponent implements OnInit {
     } else {
       searchObject = Object.assign({},page, size);
     }
-
-    this.loading = true;
     const getLancamentos$ =  this.userService.getAllUserLancamentos(searchObject).pipe(share());
     const isLoading$ = of(
       timer(200).pipe(mapTo(true), takeUntil(getLancamentos$)),
@@ -48,6 +46,7 @@ export class LancamentoConsultaComponent implements OnInit {
         this.loadingData = result;
       }),
       getLancamentos$.subscribe((res: { content: Lancamento[]; totalElements: number; }) => {
+        this.loading = true;
         this.lancamentos = res.content;
         this.totalRecords = res.totalElements;
         this.loading = false;

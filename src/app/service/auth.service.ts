@@ -29,8 +29,10 @@ export class AuthService {
     });
 
     authenticateUser(username: string, password: string): Observable<any> {
-        const user = `username=${username}&password=${password}`;
-        return this.http.post(`${this.endpoint}/login`, user, {
+        let userCredentials = new URLSearchParams();
+        userCredentials.set('username', username);
+        userCredentials.set('password', password);
+        return this.http.post(`${this.endpoint}/login`, userCredentials.toString(), {
             headers: this.formHeader,
         });
     }
